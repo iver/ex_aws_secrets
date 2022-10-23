@@ -1,15 +1,33 @@
 defmodule ExAws.Secrets.Mixfile do
   use Mix.Project
 
+  @version "1.0.0"
+  @service "secretsmanager"
+  @url "https://github.com/ex-aws/ex_aws_#{@service}"
+  @name "#{inspect(__MODULE__)}" |> String.replace(".Mixfile", "")
+
   def project do
     [
       app: :ex_aws_secrets,
-      version: "1.0.0",
+      version: @version,
       elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env()),
       elixirc_options: [warnings_as_errors: true],
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      name: @name,
+      package: package(),
+      docs: [main: @name, source_ref: "v#{@version}", source_url: @url]
+    ]
+  end
+
+  defp package do
+    [
+      description: "#{@name} service package",
+      files: ["lib", "config", "mix.exs", "README*"],
+      maintainers: ["Ivan Jaimes"],
+      licenses: ["MIT"],
+      links: %{github: @url}
     ]
   end
 
